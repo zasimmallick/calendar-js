@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css">
+    <script defer src="script.js"></script>
+   <link rel="stylesheet" href="style.css">
+   <link rel="shortcut icon" href="icon/schedule.png" type="image/x-icon">
+    
+</head>
+
+<body class="grid grid-cols-1 md:grid-cols-3 gap-5 min-h-screen p-4 sm:p-8 bg-gradient-to-br from-indigo-950 via-slate-900 to-blue-950">
+
+    <!-- Modern Clock Widget -->
+    <div class="backdrop-blur-xl bg-slate-800/20 shadow-2xl shadow-cyan-400/30 rounded-2xl p-6 border border-transparent 
+                [border-image:linear-gradient(to_right,rgba(34,211,238,0.1),rgba(59,130,246,0.1))_1] 
+                hover:shadow-cyan-400/40 transition-all hover:scale-[1.02] hover:backdrop-brightness-110
+                flex flex-col items-center justify-center col-span-1 md:col-span-3 space-y-2
+                animate-pulse [animation-duration:8s]">
+        <div id="liveClock" class="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent 
+                                  tracking-tighter drop-shadow-[0_0_12px_rgba(34,211,238,0.25)]">
+        </div>
+        <div id="liveDate" class="text-sm font-medium text-cyan-400/60 tracking-wide bg-slate-900/30 px-3 py-1 rounded-full">
+        </div>
+    </div>
+
+    <!-- Modern  Calendar Widget -->
+    <div class="backdrop-blur-xl bg-slate-800/20 shadow-2xl shadow-cyan-500/20 rounded-2xl p-6 border border-transparent 
+                [border-image:linear-gradient(to_right,rgba(34,211,238,0.1),rgba(59,130,246,0.1))_1] 
+                hover:shadow-cyan-400/30 transition-all hover:scale-[1.01] hover:backdrop-brightness-110
+                col-span-1 md:col-span-2 md:row-span-2 group/calendar">
+        <div class="flex justify-between items-center mb-5 sm:mb-7 relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-600/5 rounded-xl -z-10"></div>
+            <button id="prevMonth" class="btn btn-circle btn-sm bg-slate-800/30 hover:bg-slate-700/40 border-cyan-500/20 
+                       text-cyan-400/80 hover:text-cyan-300 transition-transform hover:scale-110">
+                <span class="text-lg">‹</span>
+            </button>
+            <h2 id="currentMonth" class="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 
+                              bg-clip-text text-transparent px-4 py-1 rounded-full backdrop-blur-sm">
+            </h2>
+            <button id="nextMonth" class="btn btn-circle btn-sm bg-slate-800/30 hover:bg-slate-700/40 border-cyan-500/20 
+                       text-cyan-400/80 hover:text-cyan-300 transition-transform hover:scale-110">
+                <span class="text-lg">›</span>
+            </button>
+        </div>
+
+        <div class="flex gap-3 mb-5 flex-col sm:flex-row group/controls">
+            <div class="input-group flex-1 backdrop-blur-sm bg-slate-800/30 rounded-lg 
+                      [border-image:linear-gradient(to_right,rgba(34,211,238,0.1),rgba(59,130,246,0.1))_1] border">
+                <select id="monthSelect" class="select select-sm bg-transparent text-slate-200/90 pl-9 
+                          focus:outline-none border-none w-full [&>option]:bg-slate-800">
+                </select>
+                <span class="absolute left-3 top-2.5 text-cyan-400/60">📅</span>
+            </div>
+            <div class="input-group backdrop-blur-sm bg-slate-800/30 rounded-lg 
+                      [border-image:linear-gradient(to_right,rgba(34,211,238,0.1),rgba(59,130,246,0.1))_1] border">
+                <input id="yearInput" type="number" 
+                       class="input input-sm bg-transparent text-slate-200/90 pl-9 pr-4 focus:outline-none border-none w-28"
+                       placeholder="2024">
+                <span class="absolute left-3 top-2.5 text-cyan-400/60">⏳</span>
+            </div>
+        </div>
+        <!-- Modern timeline progress section -->
+        <div class="flex flex-col gap-4 mt-4 p-5 bg-slate-900/40 rounded-2xl border border-cyan-500/20 
+                   hover:border-cyan-400/40 transition-all group/timeline relative overflow-hidden
+                   [border-image:linear-gradient(to_right,rgba(98,234,213,0.1),rgba(59,130,246,0.1))_1]
+                   shadow-2xl shadow-cyan-500/10 hover:shadow-cyan-400/20">
+            <div class="flex items-center gap-2 neon-text">
+                <span class="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent 
+                            inline-flex items-center gap-2">
+                    <span class="text-cyan-400">⏳</span>
+                   TIMELINE
+                </span>
+                <span class="text-xs font-mono bg-cyan-500/10 px-2 py-1 rounded-full text-cyan-400/80">
+                    Mar 1, 2025 - Jan 29, 2027
+                </span>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
+                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
+                          shadow-sm hover:shadow-cyan-400/10 group/metric">
+                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Years</div>
+                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="yearsMetric">
+                        1 years 10 months 29 days
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-600/5 opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
+                </div>
+                
+                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
+                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
+                          shadow-sm hover:shadow-cyan-400/10 group/metric">
+                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Months</div>
+                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="monthsMetric">
+                        22 months 29 days
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400/50 to-blue-500/50 opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
+                </div>
+                
+                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
+                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
+                          shadow-sm hover:shadow-cyan-400/10 group/metric">
+                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Weeks</div>
+                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="weeksMetric">
+                        100 weeks 0 days
+                    </div>
+                    <div class="absolute top-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
+                </div>
+                
+                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
+                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
+                          shadow-sm hover:shadow-cyan-400/10 group/metric">
+                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Total Days</div>
+                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="totalDaysMetric">
+                        700 days
+                    </div>
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(98,234,213,0.1),transparent)] opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
+                </div>
+            </div>
+            
+            <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(98,234,213,0.02)_50%,transparent_75%)] opacity-0 group-hover/timeline:opacity-100 transition-opacity -z-10"></div>
+        </div>
+
+        <div class="grid grid-cols-7 gap-3 text-center font-medium mb-4 p-2 bg-slate-900/20 rounded-xl">
+            <div class="text-sm bg-gradient-to-r from-cyan-400/60 to-blue-600/60 bg-clip-text text-transparent">SUN</div>
+            <div class="text-sm text-slate-300/70">MON</div>
+            <div class="text-sm text-slate-300/70">TUE</div>
+            <div class="text-sm text-slate-300/70">WED</div>
+            <div class="text-sm text-slate-300/70">THU</div>
+            <div class="text-sm text-slate-300/70">FRI</div>
+            <div class="text-sm bg-gradient-to-r from-blue-400/60 to-cyan-600/60 bg-clip-text text-transparent">SAT</div>
+        </div>
+
+        <div id="calendarDays" class="grid grid-cols-7 gap-2 p-2 bg-slate-900/20 rounded-xl transition-all">
+            <!-- Calendar days will have dynamic styling -->
+            <template id="dayTemplate">
+                <div class="aspect-square flex items-center justify-center rounded-lg border border-cyan-500/15 
+                            bg-slate-800/30 hover:bg-slate-700/40 transition-all hover:scale-105 cursor-pointer 
+                            shadow-sm hover:shadow-cyan-400/20 group/day relative overflow-hidden
+                            [&.today]:border-cyan-400/30 [&.today]:bg-cyan-500/10 [&.today]:shadow-cyan-400/10
+                            [&.adjacent-month]:opacity-50 [&.adjacent-month]:hover:opacity-70">
+                    <span class="text-slate-200/90 text-sm font-medium group-hover/day:text-cyan-300 transition-colors"></span>
+                    <div class="absolute bottom-0 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent opacity-0 group-hover/day:opacity-100 transition-opacity"></div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Modern Todo Widget (Smaller) -->
+    <div class="bg-slate-900/80 backdrop-blur-md shadow-2xl shadow-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 h-[400px] transition-all hover:border-cyan-400/40 group">
+        <div class="flex items-center gap-3 mb-6 group">
+            <div class="w-1 h-6 bg-gradient-to-b from-cyan-400 to-blue-600 rounded-full transition-all group-hover:h-8"></div>
+            <h2 class="text-xl font-semibold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent">
+                <span class="inline-block mr-2">🚀</span>TASKS
+            </h2>
+            <span id="selectedDate" class="text-sm bg-cyan-500/10 px-2 py-1 rounded-md text-cyan-400/80 ml-auto"></span>
+        </div>
+        <div class="flex gap-2 mb-4 flex-col">
+            <input id="todoInput" type="text" placeholder="New mission..." 
+                   class="input-lg bg-slate-800/20 backdrop-blur-sm border-2 border-cyan-500/20 focus:border-cyan-400/40 focus:ring-2 focus:ring-cyan-400/20 text-slate-200/90 placeholder-cyan-400/40 transition-all
+                          [border-image:linear-gradient(to_right,rgba(34,211,238,0.2),rgba(59,130,246,0.2))_1]">
+            <button id="addTodo" class="btn btn-lg transform transition-all hover:scale-[1.02] bg-gradient-to-r from-cyan-500 to-blue-600 hover:to-blue-500 border-none text-white font-semibold gap-2 shadow-lg shadow-cyan-500/20">
+                <span class="text-xl">+</span> Add Task
+            </button>
+        </div>
+        <div id="todoList" class="space-y-3 h-[calc(100%-8rem)] overflow-y-auto pr-2">
+            <!-- Todo items template -->
+            <div class="todo-item bg-gradient-to-r from-slate-800/40 to-slate-900/40 p-4 rounded-xl border border-cyan-500/20 hover:border-cyan-400/40 transition-all hover:scale-[1.01]">
+                <div class="flex items-start">
+                    <div class="w-1 bg-gradient-to-b from-cyan-400 to-blue-600 h-full rounded-full mr-3"></div>
+                    <p class="text-slate-200/90 flex-1"></p>
+                    <button class="btn btn-circle btn-xs bg-cyan-500/10 border-cyan-500/20 hover:bg-cyan-500/20 text-cyan-400/80 hover:text-cyan-300">
+                        ✓
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modified Important Dates Widget (Compact) -->
+    <div class="bg-slate-900/80 backdrop-blur-md shadow-2xl shadow-cyan-500/10 rounded-2xl p-6 border border-cyan-500/20 h-[400px]">
+        <div class="flex items-center gap-3 mb-4 group">
+            <div class="w-1 h-6 bg-gradient-to-b from-emerald-400 to-emerald-600 rounded-full"></div>
+            <h2 class="text-xl font-semibold bg-gradient-to-r from-emerald-300 to-cyan-500 bg-clip-text text-transparent">
+                <span class="inline-block mr-2">📅</span>IMPORTANT DATES
+            </h2>
+        </div>
+        <div id="notesList" class="space-y-2 h-[calc(100%-4rem)] overflow-y-auto pr-2">
+            <!-- Milestone items will be dynamically added here -->
+        </div>
+    </div>
+
+    
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+body {
+    background: linear-gradient(to bottom right, rgb(3 6 23), rgb(8 18 55));
+}
+
+/* Futuristic glassmorphism */
+[class*="bg-slate-900/80"] {
+    background: linear-gradient(145deg, rgba(15,23,42,0.4) 0%, rgba(58,78,115,0.2) 100%) !important;
+    backdrop-filter: blur(32px) saturate(300%);
+    border: 1px solid rgba(98,234,213,0.2) !important;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.3),
+                inset 0 4px 24px rgba(255,255,255,0.05);
+}
+
+/* Holographic border effect */
+[class*="bg-slate-900/80"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.4),
+                inset 0 0 24px rgba(98,234,213,0.3);
+}
+
+/* Neon text shadows */
+.neon-text {
+    text-shadow: 0 0 8px rgb(98 234 213 / 0.3);
+}
+
+/* Calendar day enhancements */
+.calendar-day {
+    background: linear-gradient(145deg, rgba(8,16,27,0.4) 0%, rgba(15,32,50,0.3) 100%);
+    border: 1px solid rgba(98,234,213,0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Futuristic input fields */
+.futuristic-input {
+    background: rgba(15 23 42 / 0.4) !important;
+    border: 1px solid rgba(98 234 213 / 0.2) !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 16px rgba(98,234,213,0.1);
+}
+
+/* Holographic shine effect on hover */
+.calendar-day:hover:after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        rgba(98,234,213,0) 0%,
+        rgba(98,234,213,0.1) 50%,
+        rgba(98,234,213,0) 100%);
+    transform: rotate(30deg) translate(-20%, 100%);
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    0% { transform: rotate(30deg) translate(-20%, -150%); }
+    100% { transform: rotate(30deg) translate(-20%, 150%); }
+}
+
+/* Enhanced current day effect */
+[class*="bg-blue-600/60"] {
+    background: linear-gradient(145deg, rgba(33,150,243,0.6) 0%, rgba(98,234,213,0.4) 100%) !important;
+    box-shadow: 0 4px 24px rgba(33,150,243,0.3),
+                inset 0 0 12px rgba(255,255,255,0.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* Futuristic checkbox styling */
+.checkbox {
+    --chkbg: rgba(98,234,213,0.3);
+    --chkfg: rgb(98,234,213);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(98,234,213,0.2) !important;
+}
+
+.checkbox:checked {
+    box-shadow: 0 0 12px rgba(98,234,213,0.3);
+}
+
+/* Enhanced input focus states */
+.futuristic-input:focus {
+    box-shadow: 0 0 24px rgba(98,234,213,0.3),
+                inset 0 0 12px rgba(98,234,213,0.1);
+}
+
+/* Modern scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(15,23,42,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(98,234,213,0.4);
+    border-radius: 4px;
+}
+
+/* Enhanced button interactions */
+.btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform-origin: center;
+}
+
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* Task/Note item animations */
+#todoList div, #notesList div {
+    animation: itemAppear 0.4s ease-out;
+}
+
+@keyframes itemAppear {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    #liveClock { font-size: 1.1rem; }
+    .calendar-day {
+        min-height: 50px;
+        padding: 0.25rem;
+    }
+    [class*="bg-slate-900/80"] {
+        backdrop-filter: blur(16px);
+    }
+}
+
+/* Add timeline highlight animation */
+@keyframes timeline-pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.8; }
+}
+
+.calendar-day[data-day]:hover {
+    animation: timeline-pulse 2s infinite;
+}
+
+/* Add milestone marker styling */
+.calendar-day:hover .milestone-tooltip {
+    display: block !important;
+    animation: timeline-pulse 2s infinite;
+}
+
+/* Add custom scrollbar styling */
+#todoList::-webkit-scrollbar {
+    width: 6px;
+    background: rgba(15,23,42,0.2);
+}
+
+#todoList::-webkit-scrollbar-thumb {
+    background: rgba(98,234,213,0.3);
+    border-radius: 3px;
+}
+
+#todoList::-webkit-scrollbar-thumb:hover {
+    background: rgba(98,234,213,0.5);
+}
+
+/* Ensure scrollable area */
+#todoList {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(98,234,213,0.3) rgba(15,23,42,0.2);
+}
+
