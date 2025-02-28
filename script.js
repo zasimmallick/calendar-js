@@ -17,63 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const TIMELINE_START = new Date(2025, 2, 1); // March 1 2025
     const TIMELINE_END = new Date(2027, 0, 29); // January 29 2027
-    const MILESTONES = [
-        { 
-            date: new Date(2025, 4, 31), // May 31 2025
-            title: "Front-end Development Mastery",
-            description: "Complete front-end web development with full English proficiency (HTML, CSS, JavaScript, React) - Inshallah"
-        },
-        { 
-            date: new Date(2025, 5, 1), // June 1 2025
-            title: "Front-end Job Preparation Phase",
-            description: "Intensive preparation for front-end developer positions (June 1-30 2025) - Resume, portfolio, interviews practice - Inshallah"
-        },
-        { 
-            date: new Date(2025, 6, 1), // July 1 2025
-            title: "Secure Front-end Position",
-            description: "Obtain full-time front-end developer role with competitive salary - Inshallah"
-        },
-        { 
-            date: new Date(2025, 5, 1), // June 1 2025
-            title: "Full Stack Development Journey",
-            description: "Begin full stack development studies (Node.js, Databases, APIs) through November 30 2025 - Inshallah"
-        },
-        { 
-            date: new Date(2025, 10, 30), // November 30 2025
-            title: "Full Stack Mastery Achieved",
-            description: "Complete advanced full stack development curriculum - Inshallah"
-        },
-        { 
-            date: new Date(2025, 11, 1), // December 1 2025
-            title: "Full Stack Job Preparation",
-            description: "December 2025 intensive job search preparation for full stack roles - Inshallah"
-        },
-        { 
-            date: new Date(2026, 0, 1), // January 1 2026
-            title: "Secure Full Stack Position",
-            description: "Begin full-time full stack developer role with architecture responsibilities - Inshallah"
-        },
-        { 
-            date: new Date(2026, 0, 1), // January 1 2026
-            title: "AI Engineering Launch",
-            description: "Start AI/ML engineering studies alongside professional work - Continuous learning path - Inshallah"
-        },
-        { 
-            date: new Date(2026, 0, 1), // January 1 2026
-            title: "AI Product Development",
-            description: "Begin building AI-powered SaaS products and intelligent agents - Inshallah"
-        },
-        { 
-            date: new Date(2027, 0, 1), // January 1 2027
-            title: "AI Startup Launch",
-            description: "Official launch of AI startup solving real-world problems with revenue potential - Inshallah"
-        },
-        { 
-            date: new Date(2027, 0, 29), // January 29 2027
-            title: "Important",
-            description: "Inshallah"
-        }
-    ];
+    const MILESTONES = [];
 
     function renderCalendar() {
         const currentMonth = currentDate.getMonth();
@@ -213,22 +157,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayImportantDates() {
-        notesList.innerHTML = MILESTONES.map(milestone => `
+        notesList.innerHTML = MILESTONES.map((milestone, index) => `
             <div class="milestone-item bg-gradient-to-r from-slate-800/40 to-slate-900/40 p-4 rounded-xl border border-emerald-500/20 hover:border-emerald-400/40 transition-all">
                 <div class="flex items-start">
                     <div class="w-1 bg-emerald-400 h-full rounded-full mr-3"></div>
                     <div class="flex-1">
                         <div class="text-emerald-400/90 font-semibold text-sm">🌟 ${milestone.title}</div>
-                        <div class="text-slate-400/80 text-xs mt-1">
-                            ${milestone.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                        <div class="text-slate-300/70 text-xs mt-1">
+                            ${milestone.date.toLocaleDateString('en-US', { dateStyle: 'long' })}
                         </div>
-                        <div class="text-slate-300/70 text-xs mt-2 leading-relaxed">
-                            ${milestone.description}
-                        </div>
+                        ${milestone.description ? `<div class="text-slate-300/70 text-xs mt-2 leading-relaxed">${milestone.description}</div>` : ''}
+                        <button class="delete-milestone btn btn-xs btn-ghost text-red-400/60 hover:text-red-400 mt-2" data-index="${index}">
+                            ✕ Delete
+                        </button>
                     </div>
                 </div>
             </div>
         `).join('');
+
+        // Add delete functionality
+        document.querySelectorAll('.delete-milestone').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = e.target.dataset.index;
+                MILESTONES.splice(index, 1);
+                displayImportantDates();
+            });
+        });
     }
 
     function updateClock() {
@@ -299,25 +253,32 @@ document.addEventListener("DOMContentLoaded", function () {
     renderCalendar();
     displayImportantDates();
 
-    function updateTimeline() {
-        const now = new Date();
-        let startDate = TIMELINE_START;
-        let endDate = TIMELINE_END;
-        
-        // Only use current date if we're within the timeline period
-        let effectiveDate = now < TIMELINE_START ? TIMELINE_START : 
-                           now > TIMELINE_END ? TIMELINE_END : now;
+    const addMilestoneBtn = document.getElementById("addMilestone");
+    const milestoneModal = document.getElementById("milestoneModal");
+    const saveMilestoneBtn = document.getElementById("saveMilestone");
 
-        // Always calculate from official start to end, subtracting elapsed time
-        const elapsedMs = effectiveDate - TIMELINE_START;
-        const totalMs = TIMELINE_END - TIMELINE_START;
-        const remainingMs = totalMs - elapsedMs;
-
-        // Calculate time differences using remaining duration
-        const totalDays = Math.floor(remainingMs / (1000 * 60 * 60 * 24));
-        const totalMonths = (TIMELINE_END.getFullYear() - TIMELINE_START.getFullYear()) * 12 
-                          + (TIMELINE_END.getMonth() - TIMELINE_START.getMonth());
+    // Add new functionality
+    addMilestoneBtn.addEventListener("click", () => milestoneModal.showModal());
+    
+    saveMilestoneBtn.addEventListener("click", () => {
+        const date = document.getElementById('milestoneDate').value;
+        const title = document.getElementById('milestoneTitle').value;
+        const description = document.getElementById('milestoneDesc').value;
         
-        // ... rest of the calculations remain the same ...
-    }
+        if (!date || !title) return;
+        
+        MILESTONES.push({
+            date: new Date(date),
+            title: title,
+            description: description
+        });
+        
+        // Clear inputs
+        document.getElementById('milestoneDate').value = '';
+        document.getElementById('milestoneTitle').value = '';
+        document.getElementById('milestoneDesc').value = '';
+        
+        milestoneModal.close();
+        displayImportantDates();
+    });
 });

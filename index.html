@@ -63,66 +63,6 @@
                 <span class="absolute left-3 top-2.5 text-cyan-400/60">⏳</span>
             </div>
         </div>
-        <!-- Modern timeline progress section -->
-        <div class="flex flex-col gap-4 mt-4 p-5 bg-slate-900/40 rounded-2xl border border-cyan-500/20 
-                   hover:border-cyan-400/40 transition-all group/timeline relative overflow-hidden
-                   [border-image:linear-gradient(to_right,rgba(98,234,213,0.1),rgba(59,130,246,0.1))_1]
-                   shadow-2xl shadow-cyan-500/10 hover:shadow-cyan-400/20">
-            <div class="flex items-center gap-2 neon-text">
-                <span class="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 to-blue-500 bg-clip-text text-transparent 
-                            inline-flex items-center gap-2">
-                    <span class="text-cyan-400">⏳</span>
-                   TIMELINE
-                </span>
-                <span class="text-xs font-mono bg-cyan-500/10 px-2 py-1 rounded-full text-cyan-400/80">
-                    Mar 1, 2025 - Jan 29, 2027
-                </span>
-            </div>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
-                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
-                          shadow-sm hover:shadow-cyan-400/10 group/metric">
-                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Years</div>
-                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="yearsMetric">
-                        1 years 10 months 29 days
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-blue-600/5 opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
-                </div>
-                
-                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
-                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
-                          shadow-sm hover:shadow-cyan-400/10 group/metric">
-                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Months</div>
-                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="monthsMetric">
-                        22 months 29 days
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400/50 to-blue-500/50 opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
-                </div>
-                
-                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
-                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
-                          shadow-sm hover:shadow-cyan-400/10 group/metric">
-                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Weeks</div>
-                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="weeksMetric">
-                        100 weeks 0 days
-                    </div>
-                    <div class="absolute top-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
-                </div>
-                
-                <div class="p-3 bg-gradient-to-br from-slate-800/40 to-slate-900/60 rounded-xl border border-cyan-500/15 
-                          hover:border-cyan-400/30 transition-all hover:scale-[1.02] relative overflow-hidden
-                          shadow-sm hover:shadow-cyan-400/10 group/metric">
-                    <div class="text-cyan-400/90 font-semibold mb-1 neon-text">Total Days</div>
-                    <div class="text-lg font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent" id="totalDaysMetric">
-                        700 days
-                    </div>
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(98,234,213,0.1),transparent)] opacity-0 group-hover/metric:opacity-100 transition-opacity"></div>
-                </div>
-            </div>
-            
-            <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(98,234,213,0.02)_50%,transparent_75%)] opacity-0 group-hover/timeline:opacity-100 transition-opacity -z-10"></div>
-        </div>
 
         <div class="grid grid-cols-7 gap-3 text-center font-medium mb-4 p-2 bg-slate-900/20 rounded-xl">
             <div class="text-sm bg-gradient-to-r from-cyan-400/60 to-blue-600/60 bg-clip-text text-transparent">SUN</div>
@@ -186,13 +126,37 @@
             <h2 class="text-xl font-semibold bg-gradient-to-r from-emerald-300 to-cyan-500 bg-clip-text text-transparent">
                 <span class="inline-block mr-2">📅</span>IMPORTANT DATES
             </h2>
+            <button id="addMilestone" class="btn btn-sm ml-auto bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/20 text-emerald-400/80 hover:text-emerald-300">
+                + Add Date
+            </button>
         </div>
         <div id="notesList" class="space-y-2 h-[calc(100%-4rem)] overflow-y-auto pr-2">
             <!-- Milestone items will be dynamically added here -->
         </div>
     </div>
 
-    
+    <!-- Add Milestone Modal -->
+    <dialog id="milestoneModal" class="modal backdrop-blur-sm">
+        <div class="modal-box bg-slate-900/95 backdrop-blur-xl border border-emerald-500/20 rounded-2xl">
+            <h3 class="font-bold text-lg text-emerald-400/90 mb-4">Add Important Date</h3>
+            <div class="flex flex-col gap-3">
+                <input type="date" id="milestoneDate" 
+                    class="input input-bordered bg-slate-800/20 border-emerald-500/20 text-slate-200">
+                <input type="text" id="milestoneTitle" placeholder="Event title" 
+                    class="input input-bordered bg-slate-800/20 border-emerald-500/20 text-slate-200">
+                <textarea id="milestoneDesc" placeholder="Event description" 
+                    class="textarea textarea-bordered bg-slate-800/20 border-emerald-500/20 text-slate-200 h-24"></textarea>
+            </div>
+            <div class="modal-action">
+                <button id="saveMilestone" class="btn bg-emerald-500/10 border-emerald-500/20 hover:bg-emerald-500/20 text-emerald-400/90">
+                    Save Date
+                </button>
+                <form method="dialog">
+                    <button class="btn bg-slate-800/20 border-slate-600/20">Close</button>
+                </form>
+            </div>
+        </div>
+    </dialog>
 
 </body>
 </html>
